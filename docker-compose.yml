@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  # MLflow Tracking Server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlops-mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=sqlite:///mlflow/mlflow.db
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=/mlflow/artifacts
+    volumes:
+      - mlflow_data:/mlflow
+    command: mlflow server --host 0.0.0.0 --port 5000
+    networks:
+      - mlops-network
+
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: mlops-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - mlops-network
+
+  # Prefect Server
+  prefect:
+    image: prefecthq/prefect:2-latest
+    container_name: mlops-prefect
+    ports:
+      - "4200:4200"
+    environment:
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+      - PREFECT_API_URL=http://localhost:4200/api
+    command: prefect server start --host 0.0.0.0
+    networks:
+      - mlops-network
+
+  # Gradio App
+  gradio-app:
+    build:
+      context: .
+      target: production
+    container_name: mlops-gradio
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./examples/ui:/app/examples/ui
+    command: python examples/ui/gradio_demo.py
+    networks:
+      - mlops-network
+    depends_on:
+      - mlflow
+      - qdrant
+
+  # Streamlit Dashboard
+  streamlit-app:
+    build:
+      context: .
+      target: production
+    container_name: mlops-streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./examples/ui:/app/examples/ui
+    command: streamlit run examples/ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    networks:
+      - mlops-network
+    depends_on:
+      - mlflow
+
+  # PostgreSQL for Airflow/Prefect (optional)
+  postgres:
+    image: postgres:15-alpine
+    container_name: mlops-postgres
+    environment:
+      - POSTGRES_USER=mlops
+      - POSTGRES_PASSWORD=mlops123
+      - POSTGRES_DB=mlops
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mlops-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: mlops-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mlops-network
+
+networks:
+  mlops-network:
+    driver: bridge
+
+volumes:
+  mlflow_data:
+  qdrant_data:
+  postgres_data:
+  redis_data:
