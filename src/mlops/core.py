@@ -7,8 +7,7 @@ from sklearn.base import BaseEstimator
 
 
 class ModelTrainer:
-    """
-    Production-ready model training with experiment tracking.
+    """Production-ready model training with experiment tracking.
 
     This class provides a robust interface for training ML models with
     automatic experiment tracking, validation, and best practices.
@@ -33,8 +32,7 @@ class ModelTrainer:
         tracking_uri: str = "http://localhost:5000",
         experiment_name: str = "default",
     ) -> None:
-        """
-        Initialize the ModelTrainer.
+        """Initialize the ModelTrainer.
 
         Args:
             model: Scikit-learn compatible model
@@ -52,8 +50,7 @@ class ModelTrainer:
         y: np.ndarray,
         validation_data: Optional[tuple[np.ndarray, np.ndarray]] = None,
     ) -> Dict[str, Any]:
-        """
-        Train the model with experiment tracking.
+        """Train the model with experiment tracking.
 
         Args:
             X: Training features
@@ -85,8 +82,7 @@ class ModelTrainer:
         return metrics
 
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """
-        Make predictions with the trained model.
+        """Make predictions with the trained model.
 
         Args:
             X: Input features
@@ -109,8 +105,7 @@ class ModelTrainer:
 
 
 class PipelineOrchestrator:
-    """
-    Orchestrate ML pipelines with best practices.
+    """Orchestrate ML pipelines with best practices.
 
     This class manages end-to-end ML workflows including data loading,
     preprocessing, training, and evaluation.
@@ -124,8 +119,7 @@ class PipelineOrchestrator:
     """
 
     def __init__(self, pipeline_name: str = "ml-pipeline") -> None:
-        """
-        Initialize the PipelineOrchestrator.
+        """Initialize the PipelineOrchestrator.
 
         Args:
             pipeline_name: Name of the pipeline
@@ -134,8 +128,7 @@ class PipelineOrchestrator:
         self.steps: list[str] = []
 
     def add_step(self, step_name: str) -> None:
-        """
-        Add a step to the pipeline.
+        """Add a step to the pipeline.
 
         Args:
             step_name: Name of the pipeline step
@@ -143,8 +136,7 @@ class PipelineOrchestrator:
         self.steps.append(step_name)
 
     def run_pipeline(self, **kwargs: Any) -> Dict[str, Any]:
-        """
-        Run the complete ML pipeline.
+        """Run the complete ML pipeline.
 
         Args:
             **kwargs: Pipeline configuration parameters

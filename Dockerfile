@@ -47,9 +47,10 @@ USER mlops
 # Copy application code
 COPY --chown=mlops:mlops . .
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+# Health check (optional - uncomment if you have a health endpoint)
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+#     CMD curl -f http://localhost:8000/health || exit 1
 
-# Default command (can be overridden)
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Default command - starts a bash shell
+# Override this command when running specific services
+CMD ["bash"]

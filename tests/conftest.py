@@ -82,7 +82,7 @@ def sample_dataframe() -> pd.DataFrame:
             "feature1": np.random.randn(100),
             "feature2": np.random.randn(100),
             "feature3": np.random.randn(100),
-        }
+        },
     )
 
 
@@ -99,7 +99,7 @@ def reference_current_data() -> tuple[pd.DataFrame, pd.DataFrame]:
         {
             "feature1": np.random.randn(100),
             "feature2": np.random.randn(100),
-        }
+        },
     )
 
     # Current data with slight drift
@@ -107,7 +107,7 @@ def reference_current_data() -> tuple[pd.DataFrame, pd.DataFrame]:
         {
             "feature1": np.random.randn(100) + 0.1,
             "feature2": np.random.randn(100) + 0.1,
-        }
+        },
     )
 
     return reference, current

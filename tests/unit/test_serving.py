@@ -1,7 +1,6 @@
 """Unit tests for model serving functionality."""
 
 import numpy as np
-import pytest
 from sklearn.ensemble import RandomForestClassifier
 
 from mlops.serving import ModelServer

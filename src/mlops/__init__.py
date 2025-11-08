@@ -1,5 +1,4 @@
-"""
-MLOps Ecosystem - Production-Ready ML Systems.
+"""MLOps Ecosystem - Production-Ready ML Systems.
 
 A comprehensive toolkit for building, deploying, and monitoring machine learning systems
 with 2024-2025 best practices.
@@ -14,10 +13,10 @@ from mlops.monitoring import DriftDetector, ModelMonitor
 from mlops.serving import ModelServer
 
 __all__ = [
-    "ModelTrainer",
-    "PipelineOrchestrator",
     "DriftDetector",
     "ModelMonitor",
     "ModelServer",
+    "ModelTrainer",
+    "PipelineOrchestrator",
     "__version__",
 ]

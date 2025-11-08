@@ -7,8 +7,7 @@ import pandas as pd
 
 
 class DriftDetector:
-    """
-    Detect data drift in production ML systems.
+    """Detect data drift in production ML systems.
 
     This class provides statistical methods to detect distribution shifts
     in input features and model predictions.
@@ -24,8 +23,7 @@ class DriftDetector:
     """
 
     def __init__(self, threshold: float = 0.05) -> None:
-        """
-        Initialize the DriftDetector.
+        """Initialize the DriftDetector.
 
         Args:
             threshold: P-value threshold for drift detection
@@ -35,8 +33,7 @@ class DriftDetector:
         self._is_fitted = False
 
     def fit(self, reference_data: pd.DataFrame) -> None:
-        """
-        Fit the drift detector on reference data.
+        """Fit the drift detector on reference data.
 
         Args:
             reference_data: Reference dataset
@@ -45,8 +42,7 @@ class DriftDetector:
         self._is_fitted = True
 
     def detect_drift(self, current_data: pd.DataFrame) -> bool:
-        """
-        Detect if drift has occurred.
+        """Detect if drift has occurred.
 
         Args:
             current_data: Current production data
@@ -75,8 +71,7 @@ class DriftDetector:
 
 
 class ModelMonitor:
-    """
-    Monitor ML model performance in production.
+    """Monitor ML model performance in production.
 
     This class tracks model predictions, calculates performance metrics,
     and triggers alerts when performance degrades.
@@ -88,8 +83,7 @@ class ModelMonitor:
     """
 
     def __init__(self, alert_threshold: float = 0.8) -> None:
-        """
-        Initialize the ModelMonitor.
+        """Initialize the ModelMonitor.
 
         Args:
             alert_threshold: Accuracy threshold for alerts
@@ -104,8 +98,7 @@ class ModelMonitor:
         prediction: float,
         actual: Optional[float] = None,
     ) -> None:
-        """
-        Log a model prediction.
+        """Log a model prediction.
 
         Args:
             features: Input features
@@ -117,8 +110,7 @@ class ModelMonitor:
             self.actuals.append(actual)
 
     def get_metrics(self) -> dict[str, float]:
-        """
-        Calculate current performance metrics.
+        """Calculate current performance metrics.
 
         Returns:
             Dictionary of performance metrics
@@ -137,16 +129,15 @@ class ModelMonitor:
                     [
                         1 if p == a else 0
                         for p, a in zip(self.predictions, self.actuals)
-                    ]
-                )
+                    ],
+                ),
             )
             metrics["accuracy"] = accuracy
 
         return metrics
 
     def check_alerts(self) -> bool:
-        """
-        Check if alerts should be triggered.
+        """Check if alerts should be triggered.
 
         Returns:
             True if alert should be triggered

@@ -293,12 +293,13 @@ select = [
 ignore = [
     "D100",   # Missing docstring in public module
     "D104",   # Missing docstring in public package
-    "ANN101", # Missing type annotation for self
-    "ANN102", # Missing type annotation for cls
     "ANN401", # Dynamically typed expressions (Any)
     "TRY003", # Avoid specifying long messages outside exception class
     "PLR0913", # Too many arguments
     "S101",   # Use of assert detected (needed for pytest)
+    "N803",   # Argument name should be lowercase (ML convention: X, y)
+    "N806",   # Variable name should be lowercase (ML convention: X, y)
+    "ARG002", # Unused method argument (sometimes needed for API compatibility)
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -349,7 +350,7 @@ exclude = '''
 # ============================================================================
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
