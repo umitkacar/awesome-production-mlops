@@ -671,24 +671,81 @@ optimized_model = optimizer.optimize_model("model.onnx")
 # Python 3.8+
 python --version
 
-# Virtual environment
-python -m venv mlops-env
-source mlops-env/bin/activate  # Linux/Mac
-# or
-mlops-env\Scripts\activate  # Windows
+# Virtual environment (recommended: use hatch)
+pip install hatch
 ```
 
 ### ⚡ Installation
+
+#### Option 1: Quick Install (Recommended)
 
 ```bash
 # Clone the repository
 git clone https://github.com/umitkacar/MLOps.git
 cd MLOps
 
-# Install dependencies
-pip install -r requirements.txt
+# Install with hatch (modern way)
+hatch shell
 
-# Start exploring! 🚀
+# Install all development tools
+pip install -e ".[complete]"
+
+# Setup pre-commit hooks
+pre-commit install
+```
+
+#### Option 2: Basic Install
+
+```bash
+# Clone and install dependencies
+git clone https://github.com/umitkacar/MLOps.git
+cd MLOps
+pip install -r requirements.txt
+```
+
+### 🛠️ Development Tools
+
+This project uses **ultra-modern Python tooling** for 2024-2025:
+
+<div align="center">
+
+| 🔧 Tool | 📝 Purpose | ⚡ Command |
+|---------|-----------|-----------|
+| **[Hatch](https://hatch.pypa.io/)** | Project management | `hatch shell` |
+| **[Ruff](https://docs.astral.sh/ruff/)** | Lightning-fast linter | `ruff check .` |
+| **[Black](https://black.readthedocs.io/)** | Code formatter | `black .` |
+| **[MyPy](https://mypy.readthedocs.io/)** | Type checker | `mypy src/mlops` |
+| **[Pytest](https://docs.pytest.org/)** | Testing framework | `pytest` |
+| **[Pre-commit](https://pre-commit.com/)** | Git hooks | `pre-commit run --all-files` |
+
+</div>
+
+#### 🎯 Quick Commands (Using Makefile)
+
+```bash
+# Run tests
+make test
+
+# Run tests with coverage
+make test-cov
+
+# Format code
+make format
+
+# Run all linters
+make lint
+
+# Type check
+make type-check
+
+# Run all checks
+make all-checks
+
+# Start all services
+make docker-compose-up
+
+# See all commands
+make help
 ```
 
 ### 🎯 Quick Examples
