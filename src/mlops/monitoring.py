@@ -126,10 +126,7 @@ class ModelMonitor:
         if self.actuals:
             accuracy = float(
                 np.mean(
-                    [
-                        1 if p == a else 0
-                        for p, a in zip(self.predictions, self.actuals)
-                    ],
+                    [1 if p == a else 0 for p, a in zip(self.predictions, self.actuals)],
                 ),
             )
             metrics["accuracy"] = accuracy

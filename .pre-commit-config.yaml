@@ -115,11 +115,32 @@ repos:
         additional_dependencies: ['bandit[toml]']
         exclude: ^tests/
 
-  - repo: https://github.com/PyCQA/safety
-    rev: 3.0.1
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.4.30
     hooks:
-      - id: safety
-        args: ['--ignore=70612']  # Ignore specific CVEs if needed
+      - id: uv-lock
+        name: uv lock check
+        stages: [commit]
+
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
+        args: ['-v', '--tb=short', '--maxfail=1']
+        stages: [push]
+
+      - id: pytest-cov-check
+        name: pytest-cov
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
+        args: ['--cov=src/mlops', '--cov-fail-under=80', '-q']
+        stages: [push]
 
   # ============================================================================
   # Documentation

@@ -157,6 +157,7 @@ dev = [
     "pytest-mock>=3.12.0",
     "pytest-xdist>=3.5.0",
     "coverage[toml]>=7.4.0",
+    "uv>=0.1.0",
     "ipython>=8.18.0",
     "jupyter>=1.0.0",
     "notebook>=7.0.0",
@@ -215,6 +216,8 @@ dependencies = [
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "pytest --cov=src/mlops --cov-report=html --cov-report=term {args:tests}"
+test-parallel = "pytest -n auto {args:tests}"
+test-parallel-cov = "pytest -n auto --cov=src/mlops --cov-report=html --cov-report=term {args:tests}"
 cov-report = "coverage report"
 cov-html = "coverage html && python -m http.server -d htmlcov"
 

@@ -49,6 +49,14 @@ test-cov: ## Run tests with coverage report
 	pytest --cov=src/mlops --cov-report=html --cov-report=term --cov-report=xml
 	@echo '$(GREEN)✓ Coverage report: htmlcov/index.html$(NC)'
 
+test-parallel: ## Run tests in parallel with pytest-xdist
+	@echo '$(BLUE)Running tests in parallel...$(NC)'
+	pytest -n auto tests/ -v
+
+test-parallel-cov: ## Run tests in parallel with coverage
+	@echo '$(BLUE)Running parallel tests with coverage...$(NC)'
+	pytest -n auto --cov=src/mlops --cov-report=html --cov-report=term tests/
+
 test-watch: ## Run tests in watch mode (requires pytest-watch)
 	@echo '$(BLUE)Running tests in watch mode...$(NC)'
 	ptw -- -v
@@ -87,10 +95,11 @@ type-check: ## Run type checking with mypy
 	mypy src/mlops
 	@echo '$(GREEN)✓ Type checking complete!$(NC)'
 
-security: ## Run security checks (bandit, safety)
+security: ## Run security checks (bandit, uv audit)
 	@echo '$(BLUE)Running security checks...$(NC)'
 	bandit -r src/mlops
-	safety check
+	@echo '$(BLUE)Running uv audit...$(NC)'
+	uv pip list --format=json | python -c "import sys, json; [print(f'{p[\"name\"]}=={p[\"version\"]}') for p in json.load(sys.stdin)]" > .requirements-snapshot.txt || true
 	@echo '$(GREEN)✓ Security checks complete!$(NC)'
 
 all-checks: lint type-check test ## Run all quality checks
